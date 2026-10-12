@@ -462,10 +462,25 @@ async function createStateStore(options = {}) {
   };
 }
 
+async function createAllocationStore({ dbPath } = {}) {
+  const { assertPrivatePath, validatePublished } = require('./allocation-snapshot');
+  const { createAllocationQueryApi } = require('./allocation-queries');
+  const { createAllocationRepository } = require('./allocation-repository');
+  assertPrivatePath(dbPath, false);
+  const store = await createStateStore({ dbPath });
+  try {
+    assertPrivatePath(dbPath);
+    store._database.withSnapshot(() => validatePublished(createAllocationRepository(store._database, store.dbPath)));
+    return { ...createAllocationQueryApi(store._database, store.dbPath), dbPath: store.dbPath, close: store.close };
+  } catch (error) { store.close(); throw error; }
+}
+
 module.exports = {
   DEFAULT_STATE_STORE_RELATIVE_PATH,
   buildInstallStateStoreRecord,
   createStateStore,
+  createAllocationStore,
+  openAllocationSnapshot: options => require('./allocation-snapshot').openAllocationSnapshot(options),
   projectInstallState,
   reconcileCurrentInstallState,
   reconcileInstallStateProjections,

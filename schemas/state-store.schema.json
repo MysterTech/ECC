@@ -46,6 +46,78 @@
       "items": {
         "$ref": "#/$defs/workItem"
       }
+    },
+    "allocationPolicies": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/allocationPolicy"
+      }
+    },
+    "allocationRevisions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/allocationRevision"
+      }
+    },
+    "allocationAttempts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/allocationAttempt"
+      }
+    },
+    "allocationOperations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/allocationOperation"
+      }
+    },
+    "allocationCheckpoints": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/allocationCheckpoint"
+      }
+    },
+    "allocationRecoveries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/allocationRecovery"
+      }
+    },
+    "allocationTransitions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/allocationTransition"
+      }
+    },
+    "allocationAvailability": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/allocationAvailability"
+      }
+    },
+    "allocationCapsules": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/allocationCapsule"
+      }
+    },
+    "allocationProgress": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/allocationProgress"
+      }
+    },
+    "allocationWorkspaceManifests": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/allocationManifest"
+      }
+    },
+    "allocationFrontiers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/allocationFrontier"
+      }
     }
   },
   "$defs": {
@@ -375,6 +447,782 @@
         },
         "updatedAt": {
           "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "allocationRevision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "binding",
+        "policyDigest",
+        "route",
+        "createdAt",
+        "automaticContinuationAcknowledgement"
+      ],
+      "properties": {
+        "identity": {
+          "type": "object"
+        },
+        "binding": {
+          "type": "object"
+        },
+        "policyDigest": {
+          "type": "string"
+        },
+        "route": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "automaticContinuationAcknowledgement": {
+          "type": [
+            "object",
+            "null"
+          ]
+        }
+      }
+    },
+    "allocationFrontier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "frontier",
+        "currentAttemptId",
+        "taskState",
+        "journalVersion",
+        "switchCount",
+        "visitedByTier",
+        "successorId",
+        "successorKind",
+        "closureSafe"
+      ],
+      "properties": {
+        "frontier": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "currentAttemptId": {
+          "type": "string"
+        },
+        "taskState": {
+          "enum": [
+            "deciding",
+            "active",
+            "awaiting-checkpoint",
+            "awaiting-verification",
+            "asserted-success",
+            "blocked",
+            "provider-paused",
+            "successor-reserved",
+            "recovery-required",
+            "exhausted",
+            "abandoned"
+          ]
+        },
+        "journalVersion": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "switchCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "visitedByTier": {
+          "type": "object"
+        },
+        "successorId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "successorKind": {
+          "enum": [
+            null,
+            "provider",
+            "capability"
+          ]
+        },
+        "closureSafe": {
+          "type": "boolean"
+        }
+      }
+    },
+    "allocationAttempt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "attemptId",
+        "ordinal",
+        "parentAttemptId",
+        "tierId",
+        "allocationId",
+        "state",
+        "checkpointId",
+        "sourceTransitionId",
+        "createdAt",
+        "claimedBy"
+      ],
+      "properties": {
+        "attemptId": {
+          "type": "string"
+        },
+        "ordinal": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "parentAttemptId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tierId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "allocationId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "state": {
+          "enum": [
+            "deciding",
+            "active",
+            "awaiting-checkpoint",
+            "awaiting-verification",
+            "asserted-success",
+            "blocked",
+            "provider-paused",
+            "successor-reserved",
+            "recovery-required",
+            "exhausted",
+            "abandoned",
+            "reserved"
+          ]
+        },
+        "checkpointId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sourceTransitionId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "claimedBy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "allocationOperation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operationId",
+        "attemptId",
+        "phase",
+        "providerId",
+        "tierId",
+        "allocationId",
+        "runtimeDigest",
+        "requested",
+        "finalContextDigest",
+        "workspaceManifestDigest",
+        "inputDigest",
+        "ownerId",
+        "state",
+        "result",
+        "observed",
+        "metrics",
+        "createdAt",
+        "completedAt"
+      ],
+      "properties": {
+        "operationId": {
+          "type": "string"
+        },
+        "attemptId": {
+          "type": "string"
+        },
+        "phase": {
+          "enum": [
+            "classifier",
+            "proposal",
+            "task"
+          ]
+        },
+        "providerId": {
+          "type": "string"
+        },
+        "tierId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "allocationId": {
+          "type": "string"
+        },
+        "runtimeDigest": {
+          "type": "string"
+        },
+        "requested": {
+          "type": "object"
+        },
+        "finalContextDigest": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "workspaceManifestDigest": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "inputDigest": {
+          "type": "string"
+        },
+        "ownerId": {
+          "type": "string"
+        },
+        "state": {
+          "enum": [
+            "reserved",
+            "launch-initiated",
+            "completed",
+            "not-started",
+            "execution-unknown"
+          ]
+        },
+        "result": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "observed": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "metrics": {
+          "type": "array"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "completedAt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "allocationCheckpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "checkpointId",
+        "attemptId",
+        "supersedesCheckpointId",
+        "kind",
+        "cause",
+        "evidence",
+        "createdAt"
+      ],
+      "properties": {
+        "checkpointId": {
+          "type": "string"
+        },
+        "attemptId": {
+          "type": "string"
+        },
+        "supersedesCheckpointId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "kind": {
+          "enum": [
+            "verified-success",
+            "verification-failure",
+            "unresolved-ambiguity",
+            "stalled",
+            "process-failure",
+            "unverified-completion"
+          ]
+        },
+        "cause": {
+          "enum": [
+            "capability",
+            "environment",
+            "requirements",
+            "unknown",
+            "none"
+          ]
+        },
+        "evidence": {
+          "type": "object"
+        },
+        "createdAt": {
+          "type": "string"
+        }
+      }
+    },
+    "allocationRecovery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "recoveryId",
+        "operationId",
+        "action",
+        "recoveryEvidence",
+        "observedCompletion",
+        "createdAt"
+      ],
+      "properties": {
+        "recoveryId": {
+          "type": "string"
+        },
+        "operationId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "action": {
+          "enum": [
+            "attach-task-completion",
+            "abandon"
+          ]
+        },
+        "recoveryEvidence": {
+          "type": "object"
+        },
+        "observedCompletion": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "createdAt": {
+          "type": "string"
+        }
+      }
+    },
+    "allocationTransition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "transitionId",
+        "parentAttemptId",
+        "successorAttemptId",
+        "sourceOperationId",
+        "kind",
+        "reason",
+        "tierId",
+        "allocationId",
+        "journalVersion",
+        "capsuleDigest",
+        "workspaceManifestDigest",
+        "checkpointId",
+        "effectAcknowledgement",
+        "createdAt",
+        "claimed"
+      ],
+      "properties": {
+        "transitionId": {
+          "type": "string"
+        },
+        "parentAttemptId": {
+          "type": "string"
+        },
+        "successorAttemptId": {
+          "type": "string"
+        },
+        "sourceOperationId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "kind": {
+          "enum": [
+            "provider",
+            "capability"
+          ]
+        },
+        "reason": {
+          "type": "string"
+        },
+        "tierId": {
+          "type": "string"
+        },
+        "allocationId": {
+          "type": "string"
+        },
+        "journalVersion": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "capsuleDigest": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "workspaceManifestDigest": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "checkpointId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "effectAcknowledgement": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "claimed": {
+          "type": "boolean"
+        }
+      }
+    },
+    "allocationAvailability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "providerId",
+        "runtimeDigest",
+        "reason",
+        "observedAt",
+        "resetAt",
+        "holdoffUntil"
+      ],
+      "properties": {
+        "providerId": {
+          "type": "string"
+        },
+        "runtimeDigest": {
+          "type": "string"
+        },
+        "reason": {
+          "enum": [
+            "confirmed-usage-limit",
+            "local-holdoff"
+          ]
+        },
+        "observedAt": {
+          "type": "string"
+        },
+        "resetAt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "holdoffUntil": {
+          "type": "string"
+        }
+      }
+    },
+    "allocationCapsule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "identity",
+        "originalTask",
+        "requirementsDigest",
+        "policyDigest",
+        "contextSetDigest",
+        "runtimeSetDigest",
+        "journalVersion",
+        "journal",
+        "workspaceManifestDigest"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "ecc.task-capsule.v1"
+        },
+        "identity": {
+          "type": "object"
+        },
+        "originalTask": {
+          "type": "object"
+        },
+        "requirementsDigest": {
+          "type": "string"
+        },
+        "policyDigest": {
+          "type": "string"
+        },
+        "contextSetDigest": {
+          "type": "string"
+        },
+        "runtimeSetDigest": {
+          "type": "string"
+        },
+        "journalVersion": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "journal": {
+          "type": "object"
+        },
+        "workspaceManifestDigest": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "allocationProgress": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "progressId",
+        "attemptId",
+        "journalVersion",
+        "journal",
+        "journalDigest",
+        "createdAt"
+      ],
+      "properties": {
+        "progressId": {
+          "type": "string"
+        },
+        "attemptId": {
+          "type": "string"
+        },
+        "journalVersion": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "journal": {
+          "type": "object"
+        },
+        "journalDigest": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        }
+      }
+    },
+    "allocationManifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "repoIdentityDigest",
+        "head",
+        "entries",
+        "exclusionSetDigest",
+        "excludedScope",
+        "digest",
+        "indexDigest"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "ecc.workspace-manifest.v1"
+        },
+        "repoIdentityDigest": {
+          "type": "string"
+        },
+        "head": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "entries": {
+          "type": "array"
+        },
+        "exclusionSetDigest": {
+          "type": "string"
+        },
+        "excludedScope": {
+          "type": "array"
+        },
+        "digest": {
+          "type": "string"
+        },
+        "indexDigest": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "allocationReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "replayed",
+        "receiptId",
+        "outcomeCode",
+        "frontier",
+        "journalVersion",
+        "taskState",
+        "attemptId",
+        "operationId",
+        "transitionId",
+        "checkpointId"
+      ],
+      "properties": {
+        "replayed": {
+          "type": "boolean"
+        },
+        "receiptId": {
+          "type": "string"
+        },
+        "outcomeCode": {
+          "type": "string"
+        },
+        "frontier": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "journalVersion": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "taskState": {
+          "type": "string"
+        },
+        "attemptId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "operationId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "transitionId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "checkpointId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "allocationPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "policyVersion",
+        "providers",
+        "allocations",
+        "tiers",
+        "taskLadder",
+        "bands",
+        "riskMinimums",
+        "phaseMinimums",
+        "fallbackTier",
+        "classifier",
+        "contextProposals",
+        "continuation",
+        "limits"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "ecc.allocation-policy.v2"
+        },
+        "policyVersion": {
+          "type": "string"
+        },
+        "providers": {
+          "type": "array"
+        },
+        "allocations": {
+          "type": "array"
+        },
+        "tiers": {
+          "type": "array"
+        },
+        "taskLadder": {
+          "type": "array"
+        },
+        "bands": {
+          "type": "object"
+        },
+        "riskMinimums": {
+          "type": "object"
+        },
+        "phaseMinimums": {
+          "type": "object"
+        },
+        "fallbackTier": {
+          "type": "string"
+        },
+        "classifier": {
+          "type": "object"
+        },
+        "contextProposals": {
+          "type": "object"
+        },
+        "continuation": {
+          "type": "object"
+        },
+        "limits": {
+          "type": "object"
         }
       }
     }

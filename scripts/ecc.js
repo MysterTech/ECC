@@ -35,6 +35,10 @@ const COMMANDS = {
     script: 'profile.js',
     description: 'Inspect Lean/Full profiles, stage managed generations, and resolve task context',
   },
+  allocation: {
+    script: 'allocation.js',
+    description: 'Allocate task models and effort with durable subscription handoff',
+  },
   'control-pane': {
     script: 'control-pane.js',
     description: 'Run the local ECC2 operator control pane',
@@ -117,6 +121,7 @@ const PRIMARY_COMMANDS = [
   'catalog',
   'consult',
   'profile',
+  'allocation',
   'control-pane',
   'ito',
   'nasiko',
@@ -246,7 +251,7 @@ function resolveCommand(argv) {
     return {
       mode: 'command',
       command: firstArg,
-      args: restArgs,
+      args: firstArg === 'allocation' && cmdStart > 0 ? [...restArgs, ...args.slice(0, cmdStart)] : restArgs,
     };
   }
 
@@ -288,7 +293,7 @@ function runCommand(commandName, args) {
         : process.env,
       stdio: isItoLogin || isProfileStart || commandName === 'setup' || commandName === 'install'
         ? 'inherit'
-        : commandName === 'memory' || commandName === 'profile'
+        : commandName === 'memory' || commandName === 'profile' || commandName === 'allocation'
           ? ['inherit', 'pipe', 'pipe']
           : ['pipe', 'pipe', 'pipe'],
       encoding: 'utf8',

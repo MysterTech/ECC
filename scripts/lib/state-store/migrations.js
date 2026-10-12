@@ -1,5 +1,7 @@
 'use strict';
 
+const { ALLOCATION_SCHEMA_SQL } = require('./allocation-migration');
+
 const INITIAL_SCHEMA_SQL = `
 CREATE TABLE IF NOT EXISTS schema_migrations (
   version INTEGER PRIMARY KEY,
@@ -144,6 +146,7 @@ const MIGRATIONS = [
     name: '002_work_items',
     sql: WORK_ITEMS_SQL,
   },
+  { version: 3, name: '003_allocation_controller', sql: ALLOCATION_SCHEMA_SQL },
 ];
 
 function ensureMigrationTable(db) {

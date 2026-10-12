@@ -14,6 +14,19 @@ const ENTITY_DEFINITIONS = {
   installState: 'installState',
   governanceEvent: 'governanceEvent',
   workItem: 'workItem',
+  allocationPolicy: 'allocationPolicy',
+  allocationRevision: 'allocationRevision',
+  allocationFrontier: 'allocationFrontier',
+  allocationAttempt: 'allocationAttempt',
+  allocationOperation: 'allocationOperation',
+  allocationCheckpoint: 'allocationCheckpoint',
+  allocationRecovery: 'allocationRecovery',
+  allocationTransition: 'allocationTransition',
+  allocationAvailability: 'allocationAvailability',
+  allocationCapsule: 'allocationCapsule',
+  allocationProgress: 'allocationProgress',
+  allocationManifest: 'allocationManifest',
+  allocationReceipt: 'allocationReceipt',
 };
 
 let cachedSchema = null;
